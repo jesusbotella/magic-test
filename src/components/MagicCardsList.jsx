@@ -49,6 +49,8 @@ export default function MagicCardsList(props) {
   };
 
   const updateSearch = (searchText) => {
+    // Should've used a debounce so that
+    // queries are not sent as user types
     setIsLoading(true);
     setHasMoreItems(true);
     setCards([]);
