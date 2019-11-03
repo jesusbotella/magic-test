@@ -6,5 +6,9 @@ module.exports = {
   },
   globals: {
     fetch: false
+  },
+  rules: {
+    'comma-dangle': 'off',
+    'object-curly-newline': 'off'
   }
 };

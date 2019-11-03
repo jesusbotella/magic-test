@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ColorChip should render properly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "green",
+      "borderColor": "#e3e3e3",
+      "borderRadius": 50,
+      "borderWidth": 2,
+      "height": 10,
+      "width": 10,
+    }
+  }
+/>
+`;

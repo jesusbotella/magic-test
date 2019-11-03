@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MagicCardItem should render properly 1`] = `
+<View
+  accessible={true}
+  isTVSelectable={true}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={null}
+>
+  <View
+    style={
+      Object {
+        "alignContent": "center",
+        "borderBottomColor": "#e3e3e3",
+        "borderBottomWidth": 1,
+        "flexDirection": "row",
+        "padding": 16,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#132B3B",
+            "fontSize": 20,
+            "fontWeight": "500",
+            "paddingBottom": 2,
+          }
+        }
+      >
+        Abundance
+      </Text>
+      <Text>
+        Enchantment
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#164B7A",
+            "paddingTop": 2,
+          }
+        }
+      >
+        Tenth Edition
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "position": "relative",
+        }
+      }
+    >
+      <Image
+        source={
+          Object {
+            "uri": "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=130483&type=card",
+          }
+        }
+        style={
+          Object {
+            "height": 55,
+            "marginRight": 10,
+            "width": 40,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "position": "absolute",
+            "right": 5,
+            "top": -5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "green",
+              "borderColor": "#e3e3e3",
+              "borderRadius": 50,
+              "borderWidth": 2,
+              "height": 10,
+              "width": 10,
+            }
+          }
+        />
+      </View>
+    </View>
+  </View>
+</View>
+`;
