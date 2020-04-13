@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { SearchBar } from 'react-native-elements';
@@ -15,47 +15,94 @@ const styles = StyleSheet.create({
   }
 });
 
+const actions = {
+  changePage(state, action) {
+    return {
+      ...state,
+      isLoading: true,
+      page: action.page
+    };
+  },
+
+  setCards(state, action) {
+    return {
+      ...state,
+      cards: action.cards,
+      isLoading: false
+    };
+  },
+
+  noMoreCardsAvailable(state) {
+    return {
+      ...state,
+      hasMoreItems: false,
+      isLoading: false
+    };
+  },
+
+  search(state, action) {
+    return {
+      ...state,
+      cards: [],
+      hasMoreItems: true,
+      isLoading: true,
+      page: 1,
+      searchText: action.searchText
+    };
+  },
+};
+
+const initialState = {
+  page: 1,
+  isLoading: true,
+  searchText: '',
+  cards: [],
+  hasMoreItems: true
+};
+
+const reducerFn = function reducerFn(state, action) {
+  const { type } = action;
+
+  if (actions[type]) {
+    return actions[type](state, action);
+  }
+
+  return state;
+};
+
 export default function MagicCardsList(props) {
   const { onItemPress: onItemPressCallback } = props;
 
-  const [page, setPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [cards, setCards] = useState([]);
-  const [hasMoreItems, setHasMoreItems] = useState(true);
+  const [state, dispatch] = useReducer(reducerFn, initialState);
 
   const loadCards = async function loadCards() {
-    const cardsList = await getCards({ page, name: search });
+    const cardsList = await getCards({
+      page: state.page,
+      name: state.searchText
+    });
 
     if (!cardsList.cards || !cardsList.cards.length) {
-      setHasMoreItems(false);
-      setIsLoading(false);
+      dispatch({ type: 'noMoreCardsAvailable' });
       return;
     }
 
-    setCards([...cards, ...cardsList.cards]);
-    setIsLoading(false);
+    dispatch({ type: 'setCards', cards: [...state.cards, ...cardsList.cards] });
   };
 
-  useEffect(() => { loadCards(); }, [page, search]);
+  useEffect(() => { loadCards(); }, [state.page, state.searchText]);
 
   const loadMoreCards = () => {
-    if (!hasMoreItems) {
+    if (!state.hasMoreItems) {
       return;
     }
 
-    setIsLoading(true);
-    setPage(page + 1);
+    dispatch({ type: 'changePage', page: state.page + 1 });
   };
 
   const updateSearch = (searchText) => {
     // Should've used a debounce so that
     // queries are not sent as user types
-    setIsLoading(true);
-    setHasMoreItems(true);
-    setCards([]);
-    setPage(1);
-    setSearch(searchText);
+    dispatch({ type: 'search', searchText });
   };
 
   const onItemPress = (item) => onItemPressCallback(item);
@@ -66,13 +113,13 @@ export default function MagicCardsList(props) {
         key="searchBar"
         placeholder="Type Here..."
         onChangeText={updateSearch}
-        value={search}
+        value={state.searchText}
       />
 
       <FlatList
         key="cardsList"
         style={styles.container}
-        data={cards}
+        data={state.cards}
         keyExtractor={(item) => item.id}
         onEndReached={loadMoreCards}
         onEndReachedThreshold={0.5}
@@ -81,7 +128,7 @@ export default function MagicCardsList(props) {
         )}
       />
 
-      { isLoading && <ActivityIndicator key="activityIndicator" size="large" color="#0000ff" /> }
+      { state.isLoading && <ActivityIndicator key="activityIndicator" size="large" color="#0000ff" /> }
     </>
   );
 }
