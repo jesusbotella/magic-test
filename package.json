@@ -25,7 +25,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
-    "jest-expo": "^35.0.0",
+    "jest-expo": "^54.0.17",
     "react-native-testing-library": "^1.11.1",
     "react-test-renderer": "16.8.3"
   },
